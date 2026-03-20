@@ -1,12 +1,14 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+COPY package.json pnpm-lock.yaml* ./
 COPY tsconfig.json ./
-RUN npm install
+RUN pnpm install --no-frozen-lockfile
 
 COPY . .
-RUN npx tsc -p tsconfig.json
+RUN pnpm run build
 
 FROM node:20-slim AS runner
 WORKDIR /app
@@ -33,8 +35,10 @@ RUN apt-get update && \
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
-COPY package.json package-lock.json* ./
-RUN npm ci --omit=dev
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --prod --no-frozen-lockfile
 
 COPY --from=builder /app/dist ./dist
 # Copy the HTML template so it is available at runtime
