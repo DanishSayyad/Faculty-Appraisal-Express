@@ -360,9 +360,10 @@ function buildData(
     ),
     section_d_total:       formatValue(partD.totalClaimed ?? 0),
     total_for_D_verified:  formatValue(partD.totalVerified ?? 0),
+    // assDeanHODMarks: formatValue(partD.directorMarks ?? 0),
 
     // ── Part E / Summary ──────────────────────────────────────────────────────
-    assDeanHODMarks:      formatValue(partD.hodMarks ?? partD.directorMarks ?? 0),
+    assDeanHODMarks:      formatValue(partD.directorMarks ?? 0),
     assDeanDeanMarks:     formatValue(partD.adminDeanMarks ?? partD.deanMarks ?? 0),
     assSelfawardedmarks:  formatValue(partD.adminSelfAwardedMarks ?? partD.selfAwardedMarks ?? 0),
     sumMarks_hod_dean:    formatValue((partD.hodMarks ?? 0) + (partD.deanMarks ?? 0)),

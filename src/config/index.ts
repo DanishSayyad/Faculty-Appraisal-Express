@@ -19,7 +19,7 @@ export const config = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '24h',
   
   // CORS
-  allowedOrigins: (process.env.ALLOWED_ORIGINS')
+  allowedOrigins: (process.env.ALLOWED_ORIGINS)
     .split(',')
     .map(origin => origin.trim()),
 };
